@@ -30,7 +30,7 @@ Build a static marketing website for Warboys Gutter Clearing using Astro (TypeSc
     - Add CSS reset / normalize rules
     - Import Google Fonts (Oswald, Montserrat, Open Sans) via `@import` or document preconnect approach
     - _Requirements: 15.1, 15.2, 15.4, 15.5, 15.6_
-  - [ ]* 2.2 Write property test for colour contrast compliance
+  - [x] 2.2 Write property test for colour contrast compliance
     - **Property 10: Colour contrast compliance**
     - Generate all foreground/background colour pairs from the Design_System and verify contrast ratios meet WCAG thresholds (4.5:1 normal, 3:1 large)
     - **Validates: Requirements 15.5**
@@ -77,7 +77,7 @@ Build a static marketing website for Warboys Gutter Clearing using Astro (TypeSc
     - Describe hand clearing and Predator vacuum methods within Gutter Clearing card
     - Inline CTA link after the cards
     - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5, 5.6, 14.3_
-  - [ ]* 7.2 Write property test for excluded services
+  - [x] 7.2 Write property test for excluded services
     - **Property 1: Excluded services never appear**
     - Verify rendered output never contains "gutter repair", "fascia cleaning", "soffit cleaning", or "roof cleaning" (case-insensitive)
     - **Validates: Requirements 5.6**
@@ -129,19 +129,19 @@ Build a static marketing website for Warboys Gutter Clearing using Astro (TypeSc
     - On success (≥3 reviews) → return Google reviews with hardcoded appended, `source: 'google'`
     - Include `profileUrl` in returned data
     - _Requirements: 10.1, 10.2, 10.5, 10.7, 10.8, 10.10, 10.11_
-  - [ ]* 13.3 Write property test for minimum review count invariant
+  - [x] 13.3 Write property test for minimum review count invariant
     - **Property 3: Minimum review count invariant**
     - Generate random API response scenarios and verify output always has ≥3 reviews
     - **Validates: Requirements 10.5**
-  - [ ]* 13.4 Write property test for review fetch fallback on unavailability
+  - [x] 13.4 Write property test for review fetch fallback on unavailability
     - **Property 4: Review fetch fallback on unavailability**
     - Generate random failure scenarios (missing env vars, API errors, <3 reviews) and verify hardcoded fallback
     - **Validates: Requirements 10.7, 10.11**
-  - [ ]* 13.5 Write property test for successful fetch appends hardcoded testimonials
+  - [x] 13.5 Write property test for successful fetch appends hardcoded testimonials
     - **Property 5: Successful fetch appends hardcoded testimonials**
     - Generate random sets of ≥3 Google reviews and verify output starts with Google reviews and ends with hardcoded
     - **Validates: Requirements 10.8**
-  - [ ]* 13.6 Write property test for no API key in build output
+  - [x] 13.6 Write property test for no API key in build output
     - **Property 6: No API key in build output**
     - Generate random API key strings and verify they do not appear in any build output file content
     - **Validates: Requirements 10.10**
@@ -158,7 +158,7 @@ Build a static marketing website for Warboys Gutter Clearing using Astro (TypeSc
     - CSS scroll carousel or paginated view for >3 reviews
     - Link to Google Business Profile listing
     - _Requirements: 10.3, 10.4, 10.5, 10.6, 10.9_
-  - [ ]* 14.3 Write property test for review rendering completeness
+  - [x] 14.3 Write property test for review rendering completeness
     - **Property 2: Review rendering completeness**
     - Generate random Review objects and verify all fields (authorName, rating, text, relativeTime) appear in rendered output
     - **Validates: Requirements 10.4**
@@ -197,11 +197,11 @@ Build a static marketing website for Warboys Gutter Clearing using Astro (TypeSc
     - Success confirmation message on successful submission
     - Error message with phone fallback on endpoint failure
     - _Requirements: 12.1, 12.4, 12.5, 12.6_
-  - [ ]* 17.2 Write property test for contact form validation rejects incomplete submissions
+  - [x] 17.2 Write property test for contact form validation rejects incomplete submissions
     - **Property 7: Contact form validation rejects incomplete submissions**
     - Generate random ContactFormData with at least one required field empty and verify validation fails identifying correct missing fields
     - **Validates: Requirements 12.5**
-  - [ ]* 17.3 Write property test for valid contact form submission sends data
+  - [x] 17.3 Write property test for valid contact form submission sends data
     - **Property 8: Valid contact form submission sends data**
     - Generate random valid ContactFormData and verify submission handler calls endpoint with correct payload
     - **Validates: Requirements 12.4**
@@ -260,7 +260,7 @@ Build a static marketing website for Warboys Gutter Clearing using Astro (TypeSc
     - Compose all modules with correct variable passing and dependencies
     - Ensure ACM is created before CloudFront, DNS after CloudFront
     - _Requirements: 17.1, 17.2, 17.3, 17.5, 17.6, 17.7_
-  - [ ]* 21.6 Write property test for security headers completeness
+  - [x] 21.6 Write property test for security headers completeness
     - **Property 11: Security headers completeness**
     - Validate the Terraform CloudFront response headers policy resource includes all 5 required security headers
     - **Validates: Requirements 17.4**
@@ -268,8 +268,8 @@ Build a static marketing website for Warboys Gutter Clearing using Astro (TypeSc
 - [x] 22. Checkpoint - Infrastructure complete
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 23. Unit tests for component content
-  - [ ]* 23.1 Create `site/src/components/__tests__/content-checks.test.ts`
+- [x] 23. Unit tests for component content
+  - [x] 23.1 Create `site/src/components/__tests__/content-checks.test.ts`
     - Test Navigation contains all 9 required links (Req 2.1)
     - Test Hero section contains correct heading, trust bullets, and CTAs (Req 3.2, 3.3, 3.4)
     - Test Trust bar contains all 4 trust signals (Req 4.2)
@@ -280,19 +280,19 @@ Build a static marketing website for Warboys Gutter Clearing using Astro (TypeSc
     - Test CTA banner contains correct buttons (Req 14.1, 14.2)
     - Test StarRating renders correct number of filled stars for rating values 1-5 (Req 10.3)
     - _Requirements: 2.1, 3.2, 3.3, 3.4, 4.2, 5.1, 5.3, 5.4, 5.5, 6.3, 6.4, 7.2, 7.3, 10.3, 13.1, 13.2, 13.3, 13.4, 14.1, 14.2_
-  - [ ]* 23.2 Create `site/src/lib/__tests__/google-reviews.test.ts`
+  - [x] 23.2 Create `site/src/lib/__tests__/google-reviews.test.ts`
     - Unit test: returns hardcoded testimonials when env vars missing (Req 10.11)
     - Unit test: returns hardcoded testimonials on API error (Req 10.7)
     - Unit test: returns hardcoded testimonials when <3 reviews returned (Req 10.7)
     - Unit test: returns Google reviews + hardcoded appended on success (Req 10.8)
     - Unit test: reads from correct env vars (Req 10.2)
     - _Requirements: 10.2, 10.7, 10.8, 10.11_
-  - [ ]* 23.3 Create `site/src/lib/__tests__/contact-form-validation.test.ts`
+  - [x] 23.3 Create `site/src/lib/__tests__/contact-form-validation.test.ts`
     - Unit test: rejects submission with missing required fields (Req 12.5)
     - Unit test: accepts submission with all required fields valid (Req 12.4)
     - Unit test: rejects invalid email format (Req 12.5)
     - _Requirements: 12.4, 12.5_
-  - [ ]* 23.4 Write CTA touch target property test
+  - [x] 23.4 Write CTA touch target property test
     - **Property 9: CTA touch target minimum size**
     - Verify all CTA button elements maintain ≥44px dimensions
     - **Validates: Requirements 15.4**
