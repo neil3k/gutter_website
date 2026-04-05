@@ -1,0 +1,141 @@
+---
+// Footer component — dark background, contact info, nav links, copyright
+const navLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'Services', href: '/#services' },
+  { label: 'How It Works', href: '/#how-it-works' },
+  { label: 'Why Choose Us', href: '/#why-choose-us' },
+  { label: 'Gallery', href: '/#gallery' },
+  { label: 'About', href: '/#about' },
+  { label: 'Testimonials', href: '/#testimonials' },
+  { label: 'Service Area', href: '/#service-area' },
+  { label: 'Contact Us', href: '/contact' },
+];
+
+const phone = '07936 085632';
+const phoneTel = phone.replace(/\s/g, '');
+const email = 'warboysgutterclearing@btinternet.com';
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__contact">
+      <h3 class="footer__heading">Get In Touch</h3>
+      <ul class="footer__contact-list" role="list">
+        <li>
+          <a href={`tel:${phoneTel}`} class="footer__link">
+            <svg class="footer__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            {phone}
+          </a>
+        </li>
+        <li>
+          <a href={`mailto:${email}`} class="footer__link">
+            <svg class="footer__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            {email}
+          </a>
+        </li>
+        <li class="footer__area">
+          <svg class="footer__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          Serving Warboys &amp; Cambridgeshire
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer__nav">
+      <h3 class="footer__heading">Quick Links</h3>
+      <ul class="footer__nav-list" role="list">
+        {navLinks.map(({ label, href }) => (
+          <li>
+            <a href={href} class="footer__link">{label}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <p>&copy; {currentYear} Warboys Gutter Clearing. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background-color: var(--color-secondary);
+    color: var(--color-text-light);
+    padding: var(--space-xl) var(--space-md) 0;
+  }
+
+  .footer__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-bottom: var(--space-lg);
+  }
+
+  @media (min-width: 768px) {
+    .footer__inner {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .footer__heading {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    color: var(--color-primary);
+    margin-bottom: var(--space-md);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .footer__contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .footer__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+  }
+
+  .footer__link:hover,
+  .footer__link:focus-visible {
+    color: var(--color-primary);
+  }
+
+  .footer__area {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 0.95rem;
+  }
+
+  .footer__icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  .footer__nav-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xs) var(--space-lg);
+  }
+
+  .footer__bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: var(--space-md) 0;
+    text-align: center;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+</style>

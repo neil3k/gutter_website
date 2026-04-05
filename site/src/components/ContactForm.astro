@@ -1,0 +1,297 @@
+---
+// ContactForm — HTML form with client-side validation and fetch submission
+// Form action URL is configurable via the data-action attribute
+const formActionUrl = import.meta.env.PUBLIC_FORM_ACTION_URL || '#';
+const phone = '07936 085632';
+const phoneHref = `tel:${phone.replace(/\s/g, '')}`;
+---
+
+<form
+  class="contact-form"
+  data-action={formActionUrl}
+  novalidate
+>
+  <div class="contact-form__field">
+    <label for="contact-name" class="contact-form__label">Name <span class="contact-form__required" aria-hidden="true">*</span></label>
+    <input
+      type="text"
+      id="contact-name"
+      name="name"
+      required
+      autocomplete="name"
+      class="contact-form__input"
+      aria-required="true"
+    />
+    <span class="contact-form__error" data-error="name" role="alert" hidden>Please enter your name.</span>
+  </div>
+
+  <div class="contact-form__field">
+    <label for="contact-email" class="contact-form__label">Email <span class="contact-form__required" aria-hidden="true">*</span></label>
+    <input
+      type="email"
+      id="contact-email"
+      name="email"
+      required
+      autocomplete="email"
+      class="contact-form__input"
+      aria-required="true"
+    />
+    <span class="contact-form__error" data-error="email" role="alert" hidden>Please enter a valid email address.</span>
+  </div>
+
+  <div class="contact-form__field">
+    <label for="contact-tel" class="contact-form__label">Telephone <span class="contact-form__required" aria-hidden="true">*</span></label>
+    <input
+      type="tel"
+      id="contact-tel"
+      name="telephone"
+      required
+      autocomplete="tel"
+      class="contact-form__input"
+      aria-required="true"
+    />
+    <span class="contact-form__error" data-error="telephone" role="alert" hidden>Please enter your telephone number.</span>
+  </div>
+
+  <div class="contact-form__field">
+    <label for="contact-address" class="contact-form__label">Address <span class="contact-form__required" aria-hidden="true">*</span></label>
+    <input
+      type="text"
+      id="contact-address"
+      name="address"
+      required
+      autocomplete="street-address"
+      class="contact-form__input"
+      aria-required="true"
+    />
+    <span class="contact-form__error" data-error="address" role="alert" hidden>Please enter your address.</span>
+  </div>
+
+  <div class="contact-form__field">
+    <label for="contact-message" class="contact-form__label">Message <span class="contact-form__optional">(optional)</span></label>
+    <textarea
+      id="contact-message"
+      name="message"
+      rows="5"
+      class="contact-form__input contact-form__textarea"
+    ></textarea>
+  </div>
+
+  <button type="submit" class="cta-button cta-button--primary contact-form__submit">
+    Send Message
+  </button>
+
+  <div class="contact-form__status contact-form__status--success" role="alert" hidden>
+    Thanks! We'll be in touch shortly.
+  </div>
+
+  <div class="contact-form__status contact-form__status--error" role="alert" hidden>
+    Sorry, something went wrong. Please call us directly at
+    <a href={phoneHref} class="contact-form__phone-link">{phone}</a>.
+  </div>
+</form>
+
+<script>
+  const form = document.querySelector('.contact-form') as HTMLFormElement;
+  if (form) {
+    const requiredFields = ['name', 'email', 'telephone', 'address'] as const;
+
+    function clearErrors() {
+      form.querySelectorAll('.contact-form__error').forEach((el) => {
+        (el as HTMLElement).hidden = true;
+      });
+      form.querySelectorAll('.contact-form__input').forEach((el) => {
+        el.classList.remove('contact-form__input--invalid');
+      });
+    }
+
+    function showError(fieldName: string) {
+      const errorEl = form.querySelector(`[data-error="${fieldName}"]`) as HTMLElement;
+      const inputEl = form.querySelector(`[name="${fieldName}"]`) as HTMLElement;
+      if (errorEl) errorEl.hidden = false;
+      if (inputEl) inputEl.classList.add('contact-form__input--invalid');
+    }
+
+    function validateForm(): boolean {
+      clearErrors();
+      let valid = true;
+
+      for (const field of requiredFields) {
+        const input = form.querySelector(`[name="${field}"]`) as HTMLInputElement;
+        if (!input || !input.value.trim()) {
+          showError(field);
+          valid = false;
+        }
+      }
+
+      // Email format check
+      const emailInput = form.querySelector('[name="email"]') as HTMLInputElement;
+      if (emailInput && emailInput.value.trim() && !emailInput.validity.valid) {
+        showError('email');
+        valid = false;
+      }
+
+      return valid;
+    }
+
+    function hideStatus() {
+      const success = form.querySelector('.contact-form__status--success') as HTMLElement;
+      const error = form.querySelector('.contact-form__status--error') as HTMLElement;
+      if (success) success.hidden = true;
+      if (error) error.hidden = true;
+    }
+
+    form.addEventListener('submit', async (e: Event) => {
+      e.preventDefault();
+      hideStatus();
+
+      if (!validateForm()) return;
+
+      const actionUrl = form.dataset.action;
+      if (!actionUrl || actionUrl === '#') return;
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      const submitBtn = form.querySelector('.contact-form__submit') as HTMLButtonElement;
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending…';
+      }
+
+      try {
+        const response = await fetch(actionUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+
+        if (!response.ok) throw new Error('Submission failed');
+
+        const success = form.querySelector('.contact-form__status--success') as HTMLElement;
+        if (success) success.hidden = false;
+        form.reset();
+        clearErrors();
+      } catch {
+        const error = form.querySelector('.contact-form__status--error') as HTMLElement;
+        if (error) error.hidden = false;
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Message';
+        }
+      }
+    });
+  }
+</script>
+
+<style>
+  .contact-form {
+    max-width: 600px;
+    width: 100%;
+  }
+
+  .contact-form__field {
+    margin-bottom: var(--space-md);
+  }
+
+  .contact-form__label {
+    display: block;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: var(--space-xs);
+    color: var(--color-text-dark);
+  }
+
+  .contact-form__required {
+    color: #c00;
+  }
+
+  .contact-form__optional {
+    font-weight: 400;
+    font-size: 0.85rem;
+    color: #666;
+  }
+
+  .contact-form__input {
+    display: block;
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-bg-white);
+    transition: border-color 0.2s ease;
+  }
+
+  .contact-form__input:focus {
+    border-color: var(--color-primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 210, 0, 0.3);
+  }
+
+  .contact-form__input--invalid {
+    border-color: #c00;
+  }
+
+  .contact-form__input--invalid:focus {
+    box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.2);
+  }
+
+  .contact-form__textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .contact-form__error {
+    display: block;
+    margin-top: var(--space-xs);
+    font-size: 0.85rem;
+    color: #c00;
+  }
+
+  .contact-form__submit {
+    margin-top: var(--space-md);
+    width: 100%;
+    font-size: 1.1rem;
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  .contact-form__submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .contact-form__status {
+    margin-top: var(--space-md);
+    padding: var(--space-md);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  .contact-form__status--success {
+    background-color: #e6f9e6;
+    color: #1a7a1a;
+    border: 1px solid #1a7a1a;
+  }
+
+  .contact-form__status--error {
+    background-color: #fde8e8;
+    color: #c00;
+    border: 1px solid #c00;
+  }
+
+  .contact-form__phone-link {
+    font-weight: 600;
+    text-decoration: underline;
+    color: #c00;
+  }
+
+  @media (max-width: 767px) {
+    .contact-form {
+      max-width: 100%;
+    }
+  }
+</style>

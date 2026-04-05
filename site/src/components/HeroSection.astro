@@ -1,0 +1,202 @@
+---
+// HeroSection — dark background hero with headline, trust bullets, CTAs, and before/after image
+const phone = '07936 085632';
+const phoneHref = `tel:${phone.replace(/\s/g, '')}`;
+---
+
+<section class="hero" id="hero">
+  <div class="hero__inner">
+    <div class="hero__content">
+      <h1 class="hero__heading">Blocked Gutters? We Clear Them Fast.</h1>
+
+      <ul class="hero__trust-list" role="list">
+        <li class="hero__trust-item">
+          <svg class="hero__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="11" stroke="currentColor" stroke-width="2"/>
+            <path d="M7 12.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          No Mess – Ground-Based Vacuum System
+        </li>
+        <li class="hero__trust-item">
+          <svg class="hero__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2l2.09 6.26H21l-5.55 4.03L17.54 18.56 12 14.53l-5.54 4.03L8.55 12.29 3 8.26h6.91L12 2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+          Up To 4 Storeys – No Ladders Needed
+        </li>
+        <li class="hero__trust-item">
+          <svg class="hero__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2C8 2 4 5.58 4 10.5c0 3.5 3 6.5 5.5 8.5L12 22l2.5-3C17 17 20 14 20 10.5 20 5.58 16 2 12 2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M9 10l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Fully Insured Local Service
+        </li>
+      </ul>
+
+      <div class="hero__ctas">
+        <a href="/contact" class="cta-button cta-button--primary">Get a Free Quote</a>
+        <a href={phoneHref} class="cta-button cta-button--secondary">
+          <svg class="hero__phone-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.86 19.86 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.86 19.86 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.81.36 1.6.68 2.34a2 2 0 01-.45 2.11L8.09 9.41a16 16 0 006.5 6.5l1.24-1.24a2 2 0 012.11-.45c.74.32 1.53.55 2.34.68a2 2 0 011.72 2.03z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Call Now
+        </a>
+      </div>
+    </div>
+
+    <div class="hero__image">
+      <div class="hero__image-split">
+        <div class="hero__image-before">
+          <img src="/images/hero-before.jpg" alt="Blocked gutter before clearing" loading="eager" width="600" height="400" />
+          <span class="hero__image-label hero__image-label--before">Before</span>
+        </div>
+        <div class="hero__image-after">
+          <img src="/images/hero-after.jpg" alt="Clean gutter after clearing" loading="eager" width="600" height="400" />
+          <span class="hero__image-label hero__image-label--after">After</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    background-color: var(--color-secondary);
+    color: var(--color-text-light);
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  .hero__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xl);
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .hero__content {
+    flex: 1 1 50%;
+  }
+
+  .hero__heading {
+    color: var(--color-primary);
+    margin-bottom: var(--space-lg);
+  }
+
+  .hero__trust-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+
+  .hero__trust-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 1.05rem;
+    line-height: 1.4;
+  }
+
+  .hero__icon {
+    flex-shrink: 0;
+    color: var(--color-primary);
+    width: 24px;
+    height: 24px;
+  }
+
+  .hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+
+  .hero__phone-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: var(--space-xs);
+    flex-shrink: 0;
+  }
+
+  /* Before / After image split */
+  .hero__image {
+    flex: 1 1 50%;
+  }
+
+  .hero__image-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .hero__image-before,
+  .hero__image-after {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+  }
+
+  .hero__image-before img,
+  .hero__image-after img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    /* Placeholder background while images load */
+    background-color: #333;
+  }
+
+  .hero__image-label {
+    position: absolute;
+    bottom: var(--space-sm);
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+  }
+
+  .hero__image-label--before {
+    background-color: var(--color-secondary);
+    color: var(--color-text-light);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .hero__image-label--after {
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+  }
+
+  /* Mobile layout */
+  @media (max-width: 767px) {
+    .hero {
+      padding: var(--space-lg) var(--space-md);
+    }
+
+    .hero__inner {
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+
+    .hero__content {
+      text-align: center;
+    }
+
+    .hero__trust-item {
+      justify-content: center;
+    }
+
+    .hero__ctas {
+      justify-content: center;
+    }
+
+    .hero__image-split {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,22 @@
+{
+  "name": "warboys-gutter-clearing",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "astro": "^5.8.0",
+    "@astrojs/sitemap": "^3.3.1"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.1",
+    "fast-check": "^4.1.1"
+  }
+}

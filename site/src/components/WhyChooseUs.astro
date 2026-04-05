@@ -1,0 +1,142 @@
+---
+// WhyChooseUs — 5 differentiator items on dark background with Primary_Colour icon accents
+---
+
+<section class="why-choose-us" id="why-choose-us">
+  <div class="why-choose-us__inner">
+    <h2 class="why-choose-us__heading">Why Choose Us</h2>
+
+    <ul class="why-choose-us__grid">
+      <li class="why-choose-us__item">
+        <div class="why-choose-us__icon" aria-hidden="true">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <path d="M20 4L22 16H34L24 24L28 36L20 28L12 36L16 24L6 16H18L20 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <path d="M10 34L30 34" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M8 38L32 38" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="why-choose-us__title">No ladders = safer &amp; faster</h3>
+      </li>
+
+      <li class="why-choose-us__item">
+        <div class="why-choose-us__icon" aria-hidden="true">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <path d="M6 32V14L20 6L34 14V32" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14 32V22H26V32" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 32H38" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M34 14H38L36 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="why-choose-us__title">Reach awkward areas (extensions, conservatories)</h3>
+      </li>
+
+      <li class="why-choose-us__item">
+        <div class="why-choose-us__icon" aria-hidden="true">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="14" r="6" stroke="currentColor" stroke-width="2"/>
+            <path d="M10 34C10 28 14 24 20 24C26 24 30 28 30 34" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M26 12L28 14L32 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="why-choose-us__title">Friendly local &amp; reliable</h3>
+      </li>
+
+      <li class="why-choose-us__item">
+        <div class="why-choose-us__icon" aria-hidden="true">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="20" r="14" stroke="currentColor" stroke-width="2"/>
+            <path d="M16 20L20 16V28" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14 16H12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M28 16H26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M14 24H12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M28 24H26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="why-choose-us__title">Competitive pricing</h3>
+      </li>
+
+    </ul>
+  </div>
+</section>
+
+<style>
+  .why-choose-us {
+    background-color: var(--color-secondary);
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  .why-choose-us__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .why-choose-us__heading {
+    text-align: center;
+    color: var(--color-text-light);
+    margin-bottom: var(--space-xl);
+  }
+
+  .why-choose-us__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .why-choose-us__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--space-lg) var(--space-md);
+    border-radius: var(--radius-md);
+    background-color: rgba(255, 255, 255, 0.05);
+    transition: background-color 0.2s ease;
+  }
+
+  .why-choose-us__item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .why-choose-us__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: rgba(255, 210, 0, 0.12);
+    color: var(--color-primary);
+    margin-bottom: var(--space-md);
+  }
+
+  .why-choose-us__title {
+    color: var(--color-text-light);
+    font-size: clamp(1rem, 2.5vw, 1.15rem);
+    font-weight: 600;
+  }
+
+  @media (max-width: 767px) {
+    .why-choose-us__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    .why-choose-us__item {
+      flex-direction: row;
+      text-align: left;
+      gap: var(--space-md);
+      padding: var(--space-md);
+    }
+
+    .why-choose-us__icon {
+      margin-bottom: 0;
+      flex-shrink: 0;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .why-choose-us__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

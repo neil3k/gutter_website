@@ -1,0 +1,131 @@
+---
+// BeforeAfterGallery — Responsive grid of before/after gutter clearing image pairs
+const galleryItems = [
+  { id: 1, alt: "Gutter clearing job 1" },
+  { id: 2, alt: "Gutter clearing job 2" },
+  { id: 3, alt: "Gutter clearing job 3" },
+];
+---
+
+<section class="gallery" id="gallery">
+  <div class="gallery__inner">
+    <h2 class="gallery__heading">Before &amp; After</h2>
+
+    <div class="gallery__grid">
+      {galleryItems.map((item) => (
+        <div class="gallery__pair">
+          <div class="gallery__image-wrapper">
+            <img
+              src={`/images/gallery-${item.id}-before.jpg`}
+              alt={`Before - ${item.alt}`}
+              width="600"
+              height="400"
+              loading="lazy"
+            />
+            <span class="gallery__label gallery__label--before">Before</span>
+          </div>
+          <div class="gallery__image-wrapper">
+            <img
+              src={`/images/gallery-${item.id}-after.jpg`}
+              alt={`After - ${item.alt}`}
+              width="600"
+              height="400"
+              loading="lazy"
+            />
+            <span class="gallery__label gallery__label--after">After</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .gallery {
+    background-color: var(--color-bg-white);
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  .gallery__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .gallery__heading {
+    text-align: center;
+    color: var(--color-text-dark);
+    margin-bottom: var(--space-xl);
+  }
+
+  .gallery__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .gallery__pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+  }
+
+  .gallery__image-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    border: 3px solid var(--color-primary);
+    transition: transform 0.3s ease;
+  }
+
+  .gallery__image-wrapper:hover {
+    transform: scale(1.03);
+  }
+
+  .gallery__image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .gallery__label {
+    position: absolute;
+    top: var(--space-sm);
+    left: var(--space-sm);
+    padding: var(--space-xs) var(--space-sm);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    border-radius: var(--radius-sm);
+    letter-spacing: 0.05em;
+  }
+
+  .gallery__label--before {
+    background-color: var(--color-secondary);
+    color: var(--color-text-light);
+  }
+
+  .gallery__label--after {
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+  }
+
+  @media (min-width: 768px) {
+    .gallery__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .gallery__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 479px) {
+    .gallery__pair {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

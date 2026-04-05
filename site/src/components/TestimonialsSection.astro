@@ -1,0 +1,192 @@
+---
+import StarRating from "./StarRating.astro";
+import type { ReviewData } from "../data/hardcoded-testimonials";
+
+interface Props {
+  reviewData: ReviewData;
+}
+
+const { reviewData } = Astro.props;
+const { overallRating, reviews, profileUrl } = reviewData;
+---
+
+<section class="testimonials" id="testimonials">
+  <div class="testimonials__inner">
+    <h2 class="testimonials__heading">What Our Customers Say</h2>
+
+    <div class="testimonials__overall">
+      <span class="testimonials__rating-number">{overallRating.toFixed(1)}</span>
+      <StarRating rating={overallRating} />
+      <span class="testimonials__review-count">
+        Based on {reviews.length} review{reviews.length !== 1 ? "s" : ""}
+      </span>
+    </div>
+
+    <div class="testimonials__carousel" role="region" aria-label="Customer reviews">
+      {reviews.map((review) => (
+        <article class="testimonials__card">
+          <div class="testimonials__card-header">
+            <span class="testimonials__author">{review.authorName}</span>
+            <StarRating rating={review.rating} />
+          </div>
+          <p class="testimonials__text">{review.text}</p>
+          <time class="testimonials__time">{review.relativeTime}</time>
+        </article>
+      ))}
+    </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials {
+    background-color: var(--color-bg-grey);
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  .testimonials__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .testimonials__heading {
+    text-align: center;
+    color: var(--color-text-dark);
+    margin-bottom: var(--space-lg);
+  }
+
+  .testimonials__overall {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+    flex-wrap: wrap;
+  }
+
+  .testimonials__rating-number {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text-dark);
+    line-height: 1;
+  }
+
+  .testimonials__review-count {
+    font-size: 0.9rem;
+    color: #666;
+  }
+
+  .testimonials__carousel {
+    display: flex;
+    gap: var(--space-lg);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: var(--space-md);
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary) transparent;
+  }
+
+  .testimonials__carousel::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .testimonials__carousel::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .testimonials__carousel::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary);
+    border-radius: 3px;
+  }
+
+  .testimonials__card {
+    flex: 0 0 calc(33.333% - var(--space-lg) * 2 / 3);
+    min-width: 280px;
+    scroll-snap-align: start;
+    background-color: var(--color-bg-white);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    border-top: 3px solid var(--color-primary);
+    transition: box-shadow 0.2s ease;
+  }
+
+  .testimonials__card:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  .testimonials__card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .testimonials__author {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--color-text-dark);
+  }
+
+  .testimonials__text {
+    color: var(--color-text-dark);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .testimonials__time {
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: auto;
+  }
+
+  .testimonials__cta {
+    text-align: center;
+    margin-top: var(--space-lg);
+  }
+
+  .testimonials__google-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--color-secondary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s ease;
+  }
+
+  .testimonials__google-link:hover {
+    color: var(--color-primary);
+  }
+
+  .testimonials__google-link svg {
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 767px) {
+    .testimonials__card {
+      flex: 0 0 85%;
+      min-width: 0;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .testimonials__card {
+      flex: 0 0 calc(50% - var(--space-lg) / 2);
+      min-width: 0;
+    }
+  }
+</style>

@@ -1,0 +1,88 @@
+---
+interface Props {
+  rating: number;
+}
+
+const { rating } = Astro.props;
+
+// Clamp rating between 0 and 5
+const clampedRating = Math.min(5, Math.max(0, rating));
+
+// Build an array of 5 star states: 'full', 'half', or 'empty'
+const stars: ('full' | 'half' | 'empty')[] = [];
+for (let i = 1; i <= 5; i++) {
+  if (clampedRating >= i) {
+    stars.push('full');
+  } else if (clampedRating >= i - 0.5) {
+    stars.push('half');
+  } else {
+    stars.push('empty');
+  }
+}
+---
+
+<span class="star-rating" aria-label={`Rating: ${clampedRating} out of 5 stars`}>
+  {stars.map((state, index) => (
+    <span class="star-rating__star" data-state={state}>
+      {state === 'full' && (
+        <svg class="star-rating__icon star-rating__icon--filled" width="20" height="20" viewBox="0 0 24 24" fill="var(--color-primary)" aria-hidden="true">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/>
+        </svg>
+      )}
+      {state === 'half' && (
+        <span class="star-rating__half-wrapper">
+          <svg class="star-rating__icon star-rating__icon--filled star-rating__icon--half" width="20" height="20" viewBox="0 0 24 24" fill="var(--color-primary)" aria-hidden="true">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/>
+          </svg>
+          <svg class="star-rating__icon star-rating__icon--empty star-rating__icon--half-bg" width="20" height="20" viewBox="0 0 24 24" fill="#D1D5DB" aria-hidden="true">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/>
+          </svg>
+        </span>
+      )}
+      {state === 'empty' && (
+        <svg class="star-rating__icon star-rating__icon--empty" width="20" height="20" viewBox="0 0 24 24" fill="#D1D5DB" aria-hidden="true">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/>
+        </svg>
+      )}
+    </span>
+  ))}
+</span>
+
+<style>
+  .star-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .star-rating__star {
+    display: inline-flex;
+    line-height: 0;
+  }
+
+  .star-rating__icon {
+    display: block;
+  }
+
+  .star-rating__half-wrapper {
+    position: relative;
+    display: inline-flex;
+    width: 20px;
+    height: 20px;
+  }
+
+  .star-rating__icon--half {
+    position: absolute;
+    top: 0;
+    left: 0;
+    clip-path: inset(0 50% 0 0);
+    z-index: 1;
+  }
+
+  .star-rating__icon--half-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+  }
+</style>

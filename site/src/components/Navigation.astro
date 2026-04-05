@@ -1,0 +1,212 @@
+---
+// Navigation component — sticky top bar with desktop horizontal links and mobile hamburger menu
+const navLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'Services', href: '/#services' },
+  { label: 'How It Works', href: '/#how-it-works' },
+  { label: 'Why Choose Us', href: '/#why-choose-us' },
+  { label: 'Gallery', href: '/#gallery' },
+  { label: 'About', href: '/#about' },
+  { label: 'Testimonials', href: '/#testimonials' },
+  { label: 'Service Area', href: '/#service-area' },
+  { label: 'Contact Us', href: '/contact' },
+];
+---
+
+<nav class="nav" aria-label="Main navigation">
+  <div class="nav__inner">
+    <a href="/" class="nav__logo" aria-label="Warboys Gutter Clearing — Home">
+      <img src="/logo.svg" alt="Warboys Gutter Clearing" class="nav__logo-img" width="200" height="38" />
+    </a>
+
+    <button
+      class="nav__toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="nav-menu"
+      aria-label="Toggle navigation menu"
+    >
+      <span class="nav__toggle-bar"></span>
+      <span class="nav__toggle-bar"></span>
+      <span class="nav__toggle-bar"></span>
+    </button>
+
+    <ul id="nav-menu" class="nav__list" role="list">
+      {navLinks.map(({ label, href }) => (
+        <li class="nav__item">
+          <a class={`nav__link${label === 'Contact Us' ? ' nav__link--cta' : ''}`} href={href}>
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: var(--color-secondary);
+    box-shadow: var(--shadow-md);
+  }
+
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  /* Logo */
+  .nav__logo {
+    display: flex;
+    align-items: center;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--color-text-light);
+    white-space: nowrap;
+  }
+
+  .nav__logo-img {
+    height: 38px;
+    width: auto;
+  }
+
+  /* Desktop link list */
+  .nav__list {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .nav__link {
+    display: block;
+    padding: var(--space-xs) var(--space-sm);
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    border-radius: var(--radius-sm);
+    transition: color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .nav__link:hover,
+  .nav__link:focus-visible {
+    color: var(--color-primary);
+  }
+
+  .nav__link--cta {
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+    font-weight: 600;
+    padding: var(--space-xs) var(--space-md);
+  }
+
+  .nav__link--cta:hover,
+  .nav__link--cta:focus-visible {
+    background-color: #e6bd00;
+    color: var(--color-secondary);
+  }
+
+  /* Hamburger toggle — hidden on desktop */
+  .nav__toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: var(--cta-min-size);
+    height: var(--cta-min-size);
+    padding: var(--space-xs);
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .nav__toggle-bar {
+    display: block;
+    width: 24px;
+    height: 3px;
+    background-color: var(--color-text-light);
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  /* Animated hamburger → X */
+  .nav__toggle[aria-expanded="true"] .nav__toggle-bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .nav__toggle[aria-expanded="true"] .nav__toggle-bar:nth-child(2) {
+    opacity: 0;
+  }
+  .nav__toggle[aria-expanded="true"] .nav__toggle-bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  /* Mobile styles */
+  @media (max-width: 767px) {
+    .nav__toggle {
+      display: flex;
+    }
+
+    .nav__list {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: var(--color-secondary);
+      padding: var(--space-sm) 0;
+      box-shadow: var(--shadow-md);
+    }
+
+    .nav__list.is-open {
+      display: flex;
+    }
+
+    .nav__link {
+      width: 100%;
+      padding: var(--space-sm) var(--space-md);
+      font-size: 1rem;
+    }
+
+    .nav__link--cta {
+      margin: var(--space-xs) var(--space-md);
+      width: auto;
+      text-align: center;
+    }
+
+    .nav__inner {
+      flex-wrap: wrap;
+      position: relative;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector('.nav__toggle');
+  const menu = document.getElementById('nav-menu');
+
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => {
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!expanded));
+      menu.classList.toggle('is-open');
+    });
+
+    // Close menu when a link is clicked (mobile)
+    menu.querySelectorAll('.nav__link').forEach((link) => {
+      link.addEventListener('click', () => {
+        toggle.setAttribute('aria-expanded', 'false');
+        menu.classList.remove('is-open');
+      });
+    });
+  }
+</script>

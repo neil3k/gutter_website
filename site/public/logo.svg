@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 60" fill="none">
+  <!-- Gutter icon -->
+  <g transform="translate(0, 8)">
+    <!-- House/roof shape -->
+    <path d="M6 22L22 6L38 22" stroke="#FFD200" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Gutter trough -->
+    <rect x="4" y="22" width="36" height="6" rx="1" fill="#FFD200"/>
+    <!-- Downpipe -->
+    <rect x="32" y="28" width="4" height="14" rx="1" fill="#FFD200"/>
+    <!-- Water drops -->
+    <circle cx="14" cy="34" r="2" fill="#FFD200" opacity="0.6"/>
+    <circle cx="22" cy="37" r="1.5" fill="#FFD200" opacity="0.4"/>
+  </g>
+  <!-- WARBOYS text -->
+  <text x="52" y="28" font-family="'Oswald', 'Arial Black', sans-serif" font-weight="700" font-size="26" fill="#FFFFFF" letter-spacing="2">WARBOYS</text>
+  <!-- GUTTER CLEARING text -->
+  <text x="52" y="50" font-family="'Oswald', 'Arial Black', sans-serif" font-weight="600" font-size="16" fill="#FFD200" letter-spacing="3">GUTTER CLEARING</text>
+  <!-- Hazard stripe accent bar -->
+  <defs>
+    <pattern id="hazard" patternUnits="userSpaceOnUse" width="12" height="6" patternTransform="rotate(-45)">
+      <rect width="6" height="6" fill="#FFD200"/>
+      <rect x="6" width="6" height="6" fill="#111111"/>
+    </pattern>
+  </defs>
+  <rect x="52" y="54" width="200" height="3" fill="url(#hazard)" rx="1"/>
+</svg>
