@@ -1,9 +1,17 @@
 ---
 // BeforeAfterGallery — Responsive grid of before/after gutter clearing image pairs
+import { Image } from 'astro:assets';
+import gallery1Before from '../assets/images/gallery-1-before.jpg';
+import gallery1After from '../assets/images/gallery-1-after.jpg';
+import gallery2Before from '../assets/images/gallery-2-before.jpg';
+import gallery2After from '../assets/images/gallery-2-after.jpg';
+import gallery3Before from '../assets/images/gallery-3-before.jpg';
+import gallery3After from '../assets/images/gallery-3-after.jpg';
+
 const galleryItems = [
-  { id: 1, alt: "Gutter clearing job 1" },
-  { id: 2, alt: "Gutter clearing job 2" },
-  { id: 3, alt: "Gutter clearing job 3" },
+  { id: 1, alt: "Gutter clearing job 1", before: gallery1Before, after: gallery1After },
+  { id: 2, alt: "Gutter clearing job 2", before: gallery2Before, after: gallery2After },
+  { id: 3, alt: "Gutter clearing job 3", before: gallery3Before, after: gallery3After },
 ];
 ---
 
@@ -15,21 +23,21 @@ const galleryItems = [
       {galleryItems.map((item) => (
         <div class="gallery__pair">
           <div class="gallery__image-wrapper">
-            <img
-              src={`/images/gallery-${item.id}-before.jpg`}
+            <Image
+              src={item.before}
               alt={`Before - ${item.alt}`}
-              width="600"
-              height="400"
+              widths={[400, 800, 1200]}
+              sizes="(max-width: 479px) 100vw, (max-width: 767px) 50vw, (max-width: 1023px) 25vw, 20vw"
               loading="lazy"
             />
             <span class="gallery__label gallery__label--before">Before</span>
           </div>
           <div class="gallery__image-wrapper">
-            <img
-              src={`/images/gallery-${item.id}-after.jpg`}
+            <Image
+              src={item.after}
               alt={`After - ${item.alt}`}
-              width="600"
-              height="400"
+              widths={[400, 800, 1200]}
+              sizes="(max-width: 479px) 100vw, (max-width: 767px) 50vw, (max-width: 1023px) 25vw, 20vw"
               loading="lazy"
             />
             <span class="gallery__label gallery__label--after">After</span>

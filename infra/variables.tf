@@ -14,3 +14,13 @@ variable "bucket_name" {
   type        = string
   default     = "warboysgutterclearing-website"
 }
+
+variable "notify_email" {
+  description = "Business owner email address for contact form notifications"
+  type        = string
+}
+
+variable "ses_sender_email" {
+  description = "SES verified sender email address for contact form notifications"
+  type        = string
+}

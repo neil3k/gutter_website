@@ -1,5 +1,9 @@
 ---
 // HeroSection — dark background hero with headline, trust bullets, CTAs, and before/after image
+import { Image } from 'astro:assets';
+import heroBefore from '../assets/images/hero-before.jpg';
+import heroAfter from '../assets/images/hero-after.jpg';
+
 const phone = '07936 085632';
 const phoneHref = `tel:${phone.replace(/\s/g, '')}`;
 ---
@@ -46,11 +50,11 @@ const phoneHref = `tel:${phone.replace(/\s/g, '')}`;
     <div class="hero__image">
       <div class="hero__image-split">
         <div class="hero__image-before">
-          <img src="/images/hero-before.jpg" alt="Blocked gutter before clearing" loading="eager" width="600" height="400" />
+          <Image src={heroBefore} alt="Blocked gutter before clearing" widths={[400, 800, 1200]} sizes="(max-width: 767px) 100vw, 50vw" loading="eager" fetchpriority="high" />
           <span class="hero__image-label hero__image-label--before">Before</span>
         </div>
         <div class="hero__image-after">
-          <img src="/images/hero-after.jpg" alt="Clean gutter after clearing" loading="eager" width="600" height="400" />
+          <Image src={heroAfter} alt="Clean gutter after clearing" widths={[400, 800, 1200]} sizes="(max-width: 767px) 100vw, 50vw" loading="eager" fetchpriority="high" />
           <span class="hero__image-label hero__image-label--after">After</span>
         </div>
       </div>

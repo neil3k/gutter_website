@@ -11,11 +11,20 @@ import TestimonialsSection from '../components/TestimonialsSection.astro';
 import ServiceAreaSection from '../components/ServiceAreaSection.astro';
 import CtaBanner from '../components/CtaBanner.astro';
 import { fetchGoogleReviews } from '../lib/google-reviews';
+import { businessInfo } from '../data/business-info';
+import { buildLocalBusinessSchema, buildServiceSchemas } from '../lib/schema';
+import JsonLd from '../components/JsonLd.astro';
 
 const reviewData = await fetchGoogleReviews();
+const localBusinessSchema = buildLocalBusinessSchema(businessInfo, reviewData);
+const serviceSchemas = buildServiceSchemas(businessInfo);
 ---
 
 <BaseLayout title="Professional Gutter Clearing in Cambridgeshire">
+  <Fragment slot="head">
+    <JsonLd schema={localBusinessSchema} />
+    {serviceSchemas.map((s) => <JsonLd schema={s} />)}
+  </Fragment>
   <HeroSection />
   <TrustBar />
   <ServicesSection />

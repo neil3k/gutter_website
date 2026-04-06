@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Page Not Found" description="The page you're looking for doesn't exist. Head back to our homepage or get in touch.">
+  <meta name="robots" content="noindex" slot="head" />
+  <section class="error-page">
+    <div class="error-page__container">
+      <span class="error-page__code" aria-hidden="true">404</span>
+      <h1 class="error-page__heading">Page Not Found</h1>
+      <p class="error-page__message">
+        Sorry, the page you're looking for doesn't exist or may have been moved. Let's get you back on track.
+      </p>
+      <div class="error-page__actions">
+        <a href="/" class="cta-button cta-button--primary">Back to Homepage</a>
+        <a href="/contact" class="cta-button cta-button--secondary">Contact Us</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .error-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    padding: var(--space-xl) var(--space-md);
+    background-color: var(--color-bg-grey);
+    text-align: center;
+  }
+
+  .error-page__container {
+    max-width: 600px;
+    width: 100%;
+    padding: var(--space-xl) var(--space-lg);
+    background-color: var(--color-bg-white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+  }
+
+  .error-page__code {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: clamp(6rem, 15vw, 10rem);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--color-primary);
+    margin-bottom: var(--space-sm);
+  }
+
+  .error-page__heading {
+    font-family: var(--font-heading);
+    color: var(--color-text-dark);
+    margin-bottom: var(--space-md);
+  }
+
+  .error-page__message {
+    font-family: var(--font-body);
+    color: var(--color-text-dark);
+    font-size: 1.1rem;
+    max-width: 480px;
+    margin: 0 auto var(--space-lg);
+  }
+
+  .error-page__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-md);
+  }
+
+  @media (max-width: 768px) {
+    .error-page__actions {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .error-page__actions .cta-button {
+      width: 100%;
+      max-width: 320px;
+    }
+  }
+</style>

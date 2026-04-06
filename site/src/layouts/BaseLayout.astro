@@ -2,6 +2,8 @@
 import Navigation from '../components/Navigation.astro';
 import StickyMobileCta from '../components/StickyMobileCta.astro';
 import Footer from '../components/Footer.astro';
+import AnalyticsHead from '../components/AnalyticsHead.astro';
+import CookieConsent from '../components/CookieConsent.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -41,10 +43,17 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#FFD200" />
+
+    <AnalyticsHead />
 
     <!-- Google Fonts preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <slot name="head" />
   </head>
   <body>
     <Navigation />
@@ -53,5 +62,6 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
     </main>
     <Footer />
     <StickyMobileCta />
+    <CookieConsent />
   </body>
 </html>

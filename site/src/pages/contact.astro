@@ -1,13 +1,25 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactForm from '../components/ContactForm.astro';
+import { businessInfo } from '../data/business-info';
+import { buildBreadcrumbSchema } from '../lib/schema';
+import JsonLd from '../components/JsonLd.astro';
 
 const phone = '07936 085632';
 const phoneHref = `tel:${phone.replace(/\s/g, '')}`;
 const email = 'warboysgutterclearing@btinternet.com';
+
+const siteUrl = businessInfo.url;
+const breadcrumbSchema = buildBreadcrumbSchema(siteUrl, [
+  { name: 'Home', url: siteUrl },
+  { name: 'Contact Us', url: `${siteUrl}/contact` },
+]);
 ---
 
 <BaseLayout title="Contact Us" description="Get in touch with Warboys Gutter Clearing for a free quote. Call, email, or fill in our contact form.">
+  <Fragment slot="head">
+    <JsonLd schema={breadcrumbSchema} />
+  </Fragment>
   <section class="contact-page">
     <div class="contact-page__container">
       <h1 class="contact-page__heading">Contact Us</h1>

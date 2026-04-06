@@ -77,6 +77,18 @@ const phoneHref = `tel:${phone.replace(/\s/g, '')}`;
     ></textarea>
   </div>
 
+  <!-- Honeypot field — hidden from humans, catches bots -->
+  <div class="contact-form__honeypot" aria-hidden="true">
+    <label for="contact-honeypot">Do not fill this in</label>
+    <input
+      type="text"
+      id="contact-honeypot"
+      name="honeypot"
+      tabindex="-1"
+      autocomplete="off"
+    />
+  </div>
+
   <button type="submit" class="cta-button cta-button--primary contact-form__submit">
     Send Message
   </button>
@@ -287,6 +299,12 @@ const phoneHref = `tel:${phone.replace(/\s/g, '')}`;
     font-weight: 600;
     text-decoration: underline;
     color: #c00;
+  }
+
+  .contact-form__honeypot {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
   }
 
   @media (max-width: 767px) {

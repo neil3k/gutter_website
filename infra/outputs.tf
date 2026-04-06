@@ -7,3 +7,8 @@ output "s3_bucket_name" {
   description = "Name of the S3 bucket hosting the website files"
   value       = module.s3.bucket_id
 }
+
+output "contact_api_endpoint_url" {
+  description = "Full URL of the contact form API endpoint"
+  value       = "${module.api_gateway.api_endpoint}/contact"
+}

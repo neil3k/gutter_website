@@ -54,3 +54,44 @@ module "dns" {
   cloudfront_distribution_domain_name    = module.cloudfront.distribution_domain_name
   cloudfront_distribution_hosted_zone_id = module.cloudfront.distribution_hosted_zone_id
 }
+
+# ------------------------------------------------------------------------------
+# DynamoDB — contact form submissions table
+# ------------------------------------------------------------------------------
+module "dynamodb" {
+  source = "./modules/dynamodb"
+}
+
+# ------------------------------------------------------------------------------
+# SES — verified sender email identity
+# ------------------------------------------------------------------------------
+module "ses" {
+  source = "./modules/ses"
+
+  domain_name  = var.domain_name
+  zone_id      = var.hosted_zone_id
+  sender_email = var.ses_sender_email
+}
+
+# ------------------------------------------------------------------------------
+# Lambda — contact form submission handler
+# ------------------------------------------------------------------------------
+module "lambda" {
+  source = "./modules/lambda"
+
+  table_name       = module.dynamodb.table_name
+  table_arn        = module.dynamodb.table_arn
+  ses_sender_email = var.ses_sender_email
+  notify_email     = var.notify_email
+}
+
+# ------------------------------------------------------------------------------
+# API Gateway — HTTP API for contact form submissions
+# ------------------------------------------------------------------------------
+module "api_gateway" {
+  source = "./modules/api-gateway"
+
+  lambda_invoke_arn    = module.lambda.invoke_arn
+  lambda_function_name = module.lambda.function_name
+  domain_name          = var.domain_name
+}

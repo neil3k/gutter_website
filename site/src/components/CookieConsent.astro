@@ -1,0 +1,168 @@
+---
+const measurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
+---
+
+{measurementId && (
+  <div
+    id="cookie-consent-banner"
+    role="dialog"
+    aria-label="Cookie consent"
+    class="cookie-consent-banner"
+    style="display:none;"
+  >
+    <div class="cookie-consent-inner">
+      <p class="cookie-consent-message">
+        We use cookies to measure site traffic and improve your experience. No personal data is shared with third parties for advertising.
+      </p>
+      <div class="cookie-consent-actions">
+        <button id="cookie-accept" type="button" class="cookie-consent-btn cookie-consent-btn--accept">
+          Accept
+        </button>
+        <button id="cookie-reject" type="button" class="cookie-consent-btn cookie-consent-btn--reject">
+          Reject
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
+<style>
+  .cookie-consent-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1200;
+    background-color: #111111;
+    color: #FFFFFF;
+    font-family: var(--font-body);
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  .cookie-consent-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+  }
+
+  .cookie-consent-message {
+    flex: 1 1 300px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .cookie-consent-actions {
+    display: flex;
+    gap: var(--space-sm);
+    flex-shrink: 0;
+  }
+
+  .cookie-consent-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: var(--space-sm) var(--space-lg);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: uppercase;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .cookie-consent-btn--accept {
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+    border: 2px solid var(--color-primary);
+  }
+
+  .cookie-consent-btn--accept:hover {
+    background-color: #e6bd00;
+  }
+
+  .cookie-consent-btn--reject {
+    background-color: transparent;
+    color: #FFFFFF;
+    border: 2px solid #FFFFFF;
+  }
+
+  .cookie-consent-btn--reject:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+</style>
+
+<script is:inline>
+  (function() {
+    var CONSENT_KEY = 'cookie-consent';
+    var banner = document.getElementById('cookie-consent-banner');
+    var acceptBtn = document.getElementById('cookie-accept');
+    var rejectBtn = document.getElementById('cookie-reject');
+    var scriptEl = document.querySelector('script[data-measurement-id]');
+    var measurementId = scriptEl ? scriptEl.getAttribute('data-measurement-id') : null;
+
+    function getConsent() {
+      try {
+        var value = localStorage.getItem(CONSENT_KEY);
+        if (value === 'accepted' || value === 'rejected') return value;
+      } catch(e) {}
+      return null;
+    }
+
+    function setConsent(value) {
+      try { localStorage.setItem(CONSENT_KEY, value); } catch(e) {}
+    }
+
+    function loadGA4() {
+      if (!measurementId) return;
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + measurementId;
+      document.head.appendChild(s);
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      gtag('config', measurementId);
+    }
+
+    function hideBanner() {
+      if (banner) banner.style.display = 'none';
+    }
+
+    function showBanner() {
+      if (banner) banner.style.display = '';
+    }
+
+    // On page load
+    var consent = getConsent();
+    if (consent === 'accepted') {
+      hideBanner();
+      loadGA4();
+    } else if (consent === 'rejected') {
+      hideBanner();
+    } else {
+      showBanner();
+    }
+
+    // Button handlers
+    if (acceptBtn) {
+      acceptBtn.addEventListener('click', function() {
+        setConsent('accepted');
+        hideBanner();
+        loadGA4();
+      });
+    }
+
+    if (rejectBtn) {
+      rejectBtn.addEventListener('click', function() {
+        setConsent('rejected');
+        hideBanner();
+      });
+    }
+  })();
+</script>

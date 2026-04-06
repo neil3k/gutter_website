@@ -1,0 +1,19 @@
+{
+  "name": "Warboys Gutter Clearing",
+  "short_name": "WGC",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#FFD200",
+  "background_color": "#111111",
+  "display": "standalone"
+}
