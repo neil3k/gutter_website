@@ -37,7 +37,8 @@ export const businessInfo: BusinessInfo = {
   googleBusinessUrl: "https://search.google.com/local/reviews",
   serviceAreaLocalities: [
     "Warboys", "Ramsey", "St Ives", "Huntingdon", "Somersham",
-    "Chatteris", "March", "Ely", "St Neots", "Godmanchester", "Sawtry",
+    "Chatteris", "March", "St Neots", "Godmanchester", "Sawtry",
+    "Woodhurst", "Woodwalton",
   ],
   services: [
     {

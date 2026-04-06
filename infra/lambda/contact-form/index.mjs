@@ -107,10 +107,15 @@ export async function sendNotification(item, client = ses) {
  * Lambda handler — orchestrates parse → honeypot → validate → store → notify → respond.
  */
 export async function handler(event) {
+  const requestId = event.requestContext?.requestId || "unknown";
+  console.log(JSON.stringify({ level: "INFO", msg: "Request received", requestId, method: event.requestContext?.http?.method, path: event.requestContext?.http?.path }));
+
   let body;
   try {
     body = parseBody(event);
+    console.log(JSON.stringify({ level: "INFO", msg: "Body parsed", requestId, fields: Object.keys(body) }));
   } catch {
+    console.log(JSON.stringify({ level: "WARN", msg: "Invalid request body", requestId }));
     return {
       statusCode: 400,
       headers: { "Content-Type": "application/json" },
@@ -120,6 +125,7 @@ export async function handler(event) {
 
   // Honeypot check — silently discard spam
   if (isSpam(body)) {
+    console.log(JSON.stringify({ level: "INFO", msg: "Spam detected via honeypot", requestId }));
     return {
       statusCode: 200,
       headers: { "Content-Type": "application/json" },
@@ -130,6 +136,7 @@ export async function handler(event) {
   // Validate required fields
   const validation = validate(body);
   if (!validation.valid) {
+    console.log(JSON.stringify({ level: "WARN", msg: "Validation failed", requestId, errors: validation.errors }));
     return {
       statusCode: 400,
       headers: { "Content-Type": "application/json" },
@@ -153,6 +160,7 @@ export async function handler(event) {
   // Store in DynamoDB
   try {
     await storeSubmission(item);
+    console.log(JSON.stringify({ level: "INFO", msg: "DynamoDB write succeeded", requestId, submissionId: item.id }));
   } catch (err) {
     console.error("DynamoDB PutItem failed:", err);
     return {
@@ -162,13 +170,15 @@ export async function handler(event) {
     };
   }
 
-  // Send notification email — failure is non-fatal (Req 7.6)
+  // Send notification email — failure is non-fatal
   try {
     await sendNotification(item);
+    console.log(JSON.stringify({ level: "INFO", msg: "SES email sent", requestId, to: NOTIFY_EMAIL }));
   } catch (err) {
     console.error("SES SendEmail failed:", err);
   }
 
+  console.log(JSON.stringify({ level: "INFO", msg: "Request completed successfully", requestId, submissionId: item.id }));
   return {
     statusCode: 200,
     headers: { "Content-Type": "application/json" },
