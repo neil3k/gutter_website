@@ -20,7 +20,7 @@ resource "aws_cloudfront_response_headers_policy" "security" {
 
   security_headers_config {
     content_security_policy {
-      content_security_policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-ancestors 'none'"
+      content_security_policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' ${var.api_gateway_endpoint}; frame-ancestors 'none'"
       override                = true
     }
 
@@ -76,6 +76,14 @@ resource "aws_cloudfront_function" "www_redirect" {
           headers: { location: { value: newUrl } }
         };
       }
+      var uri = request.uri;
+      // Rewrite clean URLs to index.html for S3 static hosting
+      // e.g. /contact → /contact/index.html
+      if (uri.endsWith('/')) {
+        request.uri += 'index.html';
+      } else if (!uri.includes('.')) {
+        request.uri += '/index.html';
+      }
       return request;
     }
   EOF
@@ -117,6 +125,13 @@ resource "aws_cloudfront_distribution" "this" {
       event_type   = "viewer-request"
       function_arn = aws_cloudfront_function.www_redirect.arn
     }
+  }
+
+  custom_error_response {
+    error_code            = 403
+    response_code         = 404
+    response_page_path    = "/404.html"
+    error_caching_min_ttl = 300
   }
 
   custom_error_response {

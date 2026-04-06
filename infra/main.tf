@@ -41,6 +41,7 @@ module "cloudfront" {
   acm_certificate_arn       = module.acm.certificate_arn
   domain_name               = var.domain_name
   aliases                   = [var.domain_name, "www.${var.domain_name}"]
+  api_gateway_endpoint      = module.api_gateway.api_endpoint
 }
 
 # ------------------------------------------------------------------------------

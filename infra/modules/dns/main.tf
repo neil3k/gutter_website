@@ -54,3 +54,32 @@ resource "aws_route53_record" "www_aaaa" {
     evaluate_target_health = false
   }
 }
+
+# CAA records — allow Amazon (ACM) and Let's Encrypt to issue certs
+resource "aws_route53_record" "apex_caa" {
+  zone_id         = var.zone_id
+  name            = var.domain_name
+  type            = "CAA"
+  ttl             = 300
+  allow_overwrite = true
+
+  records = [
+    "0 issue \"amazon.com\"",
+    "0 issue \"amazontrust.com\"",
+    "0 issue \"letsencrypt.org\"",
+  ]
+}
+
+resource "aws_route53_record" "www_caa" {
+  zone_id         = var.zone_id
+  name            = "www.${var.domain_name}"
+  type            = "CAA"
+  ttl             = 300
+  allow_overwrite = true
+
+  records = [
+    "0 issue \"amazon.com\"",
+    "0 issue \"amazontrust.com\"",
+    "0 issue \"letsencrypt.org\"",
+  ]
+}

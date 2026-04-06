@@ -42,15 +42,23 @@ export const businessInfo: BusinessInfo = {
   services: [
     {
       name: "Gutter Clearing",
-      description: "Complete debris removal from gutters by hand or using the Predator specialist gutter vacuum system.",
+      description:
+        "Using a powerful professional gutter vacuum system — safe, efficient, and no need for ladders in most cases.",
     },
     {
-      name: "Downpipe Unblocking",
-      description: "Clearing blocked downpipes to restore proper drainage and protect your property from water damage.",
+      name: "Gutter Guard Installation",
+      description:
+        "To help prevent blockages and reduce future maintenance.",
     },
     {
-      name: "Supply & Installation of Downpipe Gutter Guards",
-      description: "Professionally fitted gutter guards to prevent future blockages from leaves and debris.",
+      name: "Downpipe Clearing & Minor Maintenance",
+      description:
+        "Clearing blocked downpipes and minor gutter repairs to restore proper drainage and protect your property.",
+    },
+    {
+      name: "Domestic & Small Commercial Properties",
+      description:
+        "We serve both domestic homes and small commercial properties across Warboys and the surrounding areas.",
     },
   ],
 };

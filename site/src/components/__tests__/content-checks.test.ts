@@ -1,10 +1,16 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { businessInfo } from '../../data/business-info';
 
 // Helper to read a component source file
 function readComponent(name: string): string {
   return readFileSync(resolve(__dirname, '..', name), 'utf-8');
+}
+
+// Helper to read a page source file
+function readPage(name: string): string {
+  return readFileSync(resolve(__dirname, '..', '..', 'pages', name), 'utf-8');
 }
 
 describe('Navigation content (Req 2.1)', () => {
@@ -29,11 +35,19 @@ describe('Navigation content (Req 2.1)', () => {
   });
 });
 
-describe('Hero section content (Req 3.2, 3.3, 3.4)', () => {
+describe('Hero section content (Req 1.1, 1.2, 3.2, 3.3, 3.4)', () => {
   const src = readComponent('HeroSection.astro');
 
   it('contains the correct heading', () => {
     expect(src).toContain('Blocked Gutters? We Clear Them Fast.');
+  });
+
+  it('contains the tagline "Local. Reliable. Family Run."', () => {
+    expect(src).toContain('Local. Reliable. Family Run.');
+  });
+
+  it('contains the welcome text "Welcome to Warboys Gutter Clearing"', () => {
+    expect(src).toContain('Welcome to Warboys Gutter Clearing');
   });
 
   it('contains trust bullets about vacuum system, ladders, and insured', () => {
@@ -68,27 +82,25 @@ describe('Trust bar content (Req 4.2)', () => {
   });
 });
 
-describe('Services section content (Req 5.1, 5.3, 5.4, 5.5)', () => {
+describe('Services section content (Req 4.1, 4.2, 4.3)', () => {
   const src = readComponent('ServicesSection.astro');
 
-  it('lists Gutter Clearing service', () => {
-    expect(src).toContain('Gutter Clearing');
+  it('imports businessInfo and iterates over services', () => {
+    expect(src).toContain("import { businessInfo } from '../data/business-info'");
+    expect(src).toContain('businessInfo.services.map');
   });
 
-  it('lists Downpipe Unblocking service', () => {
-    expect(src).toContain('Downpipe Unblocking');
+  it('renders service name and description from data', () => {
+    expect(src).toContain('service.name');
+    expect(src).toContain('service.description');
   });
 
-  it('lists Downpipe Gutter Guards service', () => {
-    expect(src).toContain('Downpipe Gutter Guards');
-  });
-
-  it('describes the Predator vacuum method', () => {
-    expect(src).toContain('Predator');
-  });
-
-  it('describes the by hand method', () => {
-    expect(src.toLowerCase()).toContain('by hand');
+  it('data file contains all 4 service names', () => {
+    const serviceNames = businessInfo.services.map(s => s.name);
+    expect(serviceNames).toContain('Gutter Clearing');
+    expect(serviceNames).toContain('Gutter Guard Installation');
+    expect(serviceNames).toContain('Downpipe Clearing & Minor Maintenance');
+    expect(serviceNames).toContain('Domestic & Small Commercial Properties');
   });
 });
 
@@ -108,27 +120,28 @@ describe('How It Works content (Req 6.3, 6.4)', () => {
   });
 });
 
-describe('Why Choose Us content (Req 7.2, 7.3)', () => {
+describe('Why Choose Us content (Req 5.1, 5.2, 5.3, 5.4, 5.5, 5.6)', () => {
   const src = readComponent('WhyChooseUs.astro');
 
-  it('displays "No ladders" differentiator', () => {
-    expect(src).toContain('No ladders');
+  it('displays "Family-run and well established" differentiator', () => {
+    expect(src).toContain('Family-run and well established');
   });
 
-  it('displays "Reach awkward areas" differentiator', () => {
-    expect(src).toContain('Reach awkward areas');
+  it('displays "Friendly, honest, and reliable" differentiator', () => {
+    expect(src).toContain('Friendly, honest, and reliable');
   });
 
-  it('displays "Friendly local" differentiator', () => {
-    expect(src).toContain('Friendly local');
+  it('displays "Local to Warboys — we care about our community" differentiator', () => {
+    expect(src).toContain('Local to Warboys');
+    expect(src).toContain('we care about our community');
   });
 
-  it('displays "Competitive pricing" differentiator', () => {
-    expect(src).toContain('Competitive pricing');
+  it('displays "Fully insured for your peace of mind" differentiator', () => {
+    expect(src).toContain('Fully insured for your peace of mind');
   });
 
-  it('displays "Appointment reminders" differentiator', () => {
-    expect(src).toContain('Appointment reminders');
+  it('displays "Modern equipment for a thorough clean every time" differentiator', () => {
+    expect(src).toContain('Modern equipment for a thorough clean every time');
   });
 });
 
@@ -155,8 +168,12 @@ describe('Footer content (Req 13.1-13.4)', () => {
   });
 });
 
-describe('CTA Banner content (Req 14.1, 14.2)', () => {
+describe('CTA Banner content (Req 6.1, 6.2, 14.1, 14.2)', () => {
   const src = readComponent('CtaBanner.astro');
+
+  it('contains the overflowing gutters paragraph', () => {
+    expect(src).toContain('Whether your gutters are overflowing');
+  });
 
   it('contains Get a Free Quote button', () => {
     expect(src).toContain('Get a Free Quote');
@@ -164,6 +181,14 @@ describe('CTA Banner content (Req 14.1, 14.2)', () => {
 
   it('contains Call Now button', () => {
     expect(src).toContain('Call Now');
+  });
+});
+
+describe('Contact page intro (Req 7.1)', () => {
+  const src = readPage('contact.astro');
+
+  it('contains "Contact us today for a free quote"', () => {
+    expect(src).toContain('Contact us today for a free quote');
   });
 });
 
@@ -186,10 +211,20 @@ describe('StarRating component (Req 10.3)', () => {
   });
 
   it('renders correct number of filled stars for ratings 1-5', () => {
-    // The component builds an array of 5 star states based on the rating
-    // Verify the loop iterates 5 times (i <= 5)
     expect(src).toContain('i <= 5');
-    // Verify it compares rating against index to determine full/half/empty
     expect(src).toContain('clampedRating >= i');
+  });
+});
+
+describe('Business data integrity (Req 3.1, 3.2, 3.3, 3.4, 3.5, 3.6)', () => {
+  it('has exactly 4 services', () => {
+    expect(businessInfo.services.length).toBe(4);
+  });
+
+  it('each service has a non-empty name and description', () => {
+    for (const service of businessInfo.services) {
+      expect(service.name.length).toBeGreaterThan(0);
+      expect(service.description.length).toBeGreaterThan(0);
+    }
   });
 });

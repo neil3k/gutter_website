@@ -119,12 +119,13 @@ describe('schema generators – unit tests', () => {
   });
 
   describe('buildServiceSchemas', () => {
-    it('returns 3 services with correct names', () => {
+    it('returns 4 services with correct names', () => {
       const schemas = buildServiceSchemas(businessInfo);
-      expect(schemas).toHaveLength(3);
+      expect(schemas).toHaveLength(4);
       expect(schemas[0].name).toBe('Gutter Clearing');
-      expect(schemas[1].name).toBe('Downpipe Unblocking');
-      expect(schemas[2].name).toBe('Supply & Installation of Downpipe Gutter Guards');
+      expect(schemas[1].name).toBe('Gutter Guard Installation');
+      expect(schemas[2].name).toBe('Downpipe Clearing & Minor Maintenance');
+      expect(schemas[3].name).toBe('Domestic & Small Commercial Properties');
       for (const s of schemas) {
         expect(s['@context']).toBe('https://schema.org');
         expect(s['@type']).toBe('Service');

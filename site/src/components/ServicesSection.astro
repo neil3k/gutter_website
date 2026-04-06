@@ -1,5 +1,5 @@
 ---
-// ServicesSection — white background grid of 3 service cards with inline CTA
+import { businessInfo } from '../data/business-info';
 ---
 
 <section class="services" id="services">
@@ -7,55 +7,13 @@
     <h2 class="services__heading">Our Services</h2>
 
     <div class="services__grid">
-      <!-- Gutter Clearing -->
-      <div class="services__card">
-        <div class="services__card-accent"></div>
-        <svg class="services__icon" width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-          <rect x="4" y="18" width="40" height="8" rx="2" stroke="currentColor" stroke-width="2"/>
-          <path d="M10 26v14M24 26v14M38 26v14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M4 18l4-8h32l4 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <h3 class="services__card-title">Gutter Clearing</h3>
-        <p class="services__card-desc">
-          Complete debris removal from your gutters using two proven methods:
-        </p>
-        <ul class="services__methods" role="list">
-          <li><strong>By hand</strong> — traditional clearing for accessible gutters</li>
-          <li>
-            <strong>Predator gutter vacuum</strong> — a specialist system designed for wet and dry debris that reaches most 2-storey buildings. Contents are collected in a drum with no mess, and a high-resolution camera verifies your gutters are fully cleared.
-          </li>
-        </ul>
-      </div>
-
-      <!-- Downpipe Unblocking -->
-      <div class="services__card">
-        <div class="services__card-accent"></div>
-        <svg class="services__icon" width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-          <rect x="18" y="4" width="12" height="36" rx="2" stroke="currentColor" stroke-width="2"/>
-          <path d="M18 14h12M18 24h12M18 34h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M22 40v4h4v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <h3 class="services__card-title">Downpipe Unblocking</h3>
-        <p class="services__card-desc">
-          Blocked downpipes cause overflows and water damage. We clear blockages to restore proper drainage and protect your property.
-        </p>
-      </div>
-
-      <!-- Supply & Installation of Downpipe Gutter Guards -->
-      <div class="services__card">
-        <div class="services__card-accent"></div>
-        <svg class="services__icon" width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-          <rect x="4" y="12" width="40" height="6" rx="1" stroke="currentColor" stroke-width="2"/>
-          <path d="M8 18v8M16 18v8M24 18v8M32 18v8M40 18v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M4 12l2-4h36l2 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M12 30h24v4H12z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-          <path d="M16 34v6M32 34v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        <h3 class="services__card-title">Supply &amp; Installation of Downpipe Gutter Guards</h3>
-        <p class="services__card-desc">
-          Prevent future blockages with professionally fitted gutter guards. We supply and install guards to keep leaves and debris out of your downpipes.
-        </p>
-      </div>
+      {businessInfo.services.map((service) => (
+        <div class="services__card">
+          <div class="services__card-accent"></div>
+          <h3 class="services__card-title">{service.name}</h3>
+          <p class="services__card-desc">{service.description}</p>
+        </div>
+      ))}
     </div>
 
     <div class="services__cta">
@@ -83,7 +41,7 @@
 
   .services__grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--space-lg);
   }
 
@@ -111,13 +69,6 @@
     background-color: var(--color-primary);
   }
 
-  .services__icon {
-    color: var(--color-text-dark);
-    margin-bottom: var(--space-md);
-    width: 48px;
-    height: 48px;
-  }
-
   .services__card-title {
     color: var(--color-text-dark);
     margin-bottom: var(--space-sm);
@@ -126,20 +77,6 @@
   .services__card-desc {
     color: #444;
     line-height: 1.6;
-    margin-bottom: var(--space-sm);
-  }
-
-  .services__methods {
-    padding-left: var(--space-md);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-    color: #444;
-    line-height: 1.6;
-  }
-
-  .services__methods li {
-    list-style: disc;
   }
 
   .services__cta {
@@ -150,12 +87,6 @@
   @media (max-width: 767px) {
     .services__grid {
       grid-template-columns: 1fr;
-    }
-  }
-
-  @media (min-width: 768px) and (max-width: 1023px) {
-    .services__grid {
-      grid-template-columns: repeat(2, 1fr);
     }
   }
 </style>

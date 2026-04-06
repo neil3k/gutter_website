@@ -12,6 +12,8 @@ const phoneHref = `tel:${phone.replace(/\s/g, '')}`;
   <div class="hero__inner">
     <div class="hero__content">
       <h1 class="hero__heading">Blocked Gutters? We Clear Them Fast.</h1>
+      <p class="hero__tagline">Local. Reliable. Family Run.</p>
+      <p class="hero__welcome">Welcome to Warboys Gutter Clearing — your trusted local experts for keeping gutters clean, clear, and working as they should.</p>
 
       <ul class="hero__trust-list" role="list">
         <li class="hero__trust-item">
@@ -83,7 +85,24 @@ const phoneHref = `tel:${phone.replace(/\s/g, '')}`;
 
   .hero__heading {
     color: var(--color-primary);
+    margin-bottom: var(--space-sm);
+  }
+
+  .hero__tagline {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    letter-spacing: 0.04em;
+    margin-bottom: var(--space-sm);
+  }
+
+  .hero__welcome {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--color-text-light);
     margin-bottom: var(--space-lg);
+    max-width: 540px;
   }
 
   .hero__trust-list {
@@ -189,6 +208,11 @@ const phoneHref = `tel:${phone.replace(/\s/g, '')}`;
 
     .hero__content {
       text-align: center;
+    }
+
+    .hero__welcome {
+      max-width: none;
+      margin-inline: auto;
     }
 
     .hero__trust-item {

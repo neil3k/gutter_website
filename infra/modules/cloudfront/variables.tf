@@ -22,3 +22,8 @@ variable "aliases" {
   description = "List of domain aliases for the distribution (apex + www)"
   type        = list(string)
 }
+
+variable "api_gateway_endpoint" {
+  description = "Base URL of the API Gateway (for CSP connect-src)"
+  type        = string
+}
