@@ -38,7 +38,7 @@ export const businessInfo: BusinessInfo = {
   serviceAreaLocalities: [
     "Warboys", "Ramsey", "St Ives", "Huntingdon", "Somersham",
     "Chatteris", "March", "St Neots", "Godmanchester", "Sawtry",
-    "Woodhurst", "Woodwalton", "Earith", "Old Hurst", "Ramsey Heights", "Ramsey St Mary's",
+    "Woodhurst", "Woodwalton", "Earith", "Old Hurst", "Ramsey Heights/St Mary's",
   ],
   services: [
     {
